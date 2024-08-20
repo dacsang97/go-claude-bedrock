@@ -1,7 +1,8 @@
 package types
 
-type MessageRequest struct {
+type MessagesRequest struct {
 	AnthropicVersion string    `json:"anthropic_version"`
+	System           string    `json:"system"`
 	Messages         []Message `json:"messages"`
 	MaxTokens        int       `json:"max_tokens"`
 	Temperature      *float32  `json:"temperature,omitempty"`
@@ -9,7 +10,7 @@ type MessageRequest struct {
 	TopK             *int      `json:"top_k,omitempty"`
 }
 
-type MessageResponse struct {
+type MessagesResponse struct {
 	ID         string               `json:"id"`
 	Type       MessagesResponseType `json:"type"`
 	Role       string               `json:"role"`

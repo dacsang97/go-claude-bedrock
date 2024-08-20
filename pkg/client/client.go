@@ -2,7 +2,6 @@ package client
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/config"
@@ -27,13 +26,11 @@ func NewClient(region string, model types.ClaudeBedrockModel) (*Client, error) {
 	}, nil
 }
 
-func (c *Client) CreateMessages(ctx context.Context, request types.MessageRequest) (*types.MessageResponse, error) {
+func (c *Client) CreateMessages(ctx context.Context, request types.MessagesRequest) (*types.MessagesResponse, error) {
 	body, err := json.Marshal(request)
 	if err != nil {
 		return nil, err
 	}
-
-	fmt.Println(c.model)
 
 	output, err := c.bedrockClient.InvokeModel(ctx, &bedrockruntime.InvokeModelInput{
 		ModelId:     aws.String(string(c.model)),
@@ -45,7 +42,7 @@ func (c *Client) CreateMessages(ctx context.Context, request types.MessageReques
 		return nil, err
 	}
 
-	var response types.MessageResponse
+	var response types.MessagesResponse
 	err = json.Unmarshal(output.Body, &response)
 
 	return &response, err

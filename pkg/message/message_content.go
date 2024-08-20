@@ -1,4 +1,4 @@
-package types
+package message
 
 type MessageContent struct {
 	Type MessagesContentType `json:"type"`

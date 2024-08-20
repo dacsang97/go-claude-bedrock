@@ -1,4 +1,4 @@
-package client
+package bedrockclient
 
 import (
 	"context"
@@ -6,16 +6,17 @@ import (
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/config"
 	"github.com/aws/aws-sdk-go-v2/service/bedrockruntime"
-	"github.com/dacsang97/go-claude-bedrock/pkg/types"
+	"github.com/dacsang97/go-claude-bedrock/pkg/message"
+	"github.com/dacsang97/go-claude-bedrock/pkg/model"
 	"github.com/goccy/go-json"
 )
 
 type Client struct {
-	model         types.ClaudeBedrockModel
+	model         model.ClaudeBedrockModel
 	bedrockClient *bedrockruntime.Client
 }
 
-func NewClient(region string, model types.ClaudeBedrockModel) (*Client, error) {
+func NewClient(region string, model model.ClaudeBedrockModel) (*Client, error) {
 	sdkConfig, err := config.LoadDefaultConfig(context.TODO(), config.WithRegion(region))
 	if err != nil {
 		return nil, err
@@ -26,7 +27,7 @@ func NewClient(region string, model types.ClaudeBedrockModel) (*Client, error) {
 	}, nil
 }
 
-func (c *Client) CreateMessages(ctx context.Context, request types.MessagesRequest) (*types.MessagesResponse, error) {
+func (c *Client) CreateMessages(ctx context.Context, request message.MessagesRequest) (*message.MessagesResponse, error) {
 	body, err := json.Marshal(request)
 	if err != nil {
 		return nil, err
@@ -42,7 +43,7 @@ func (c *Client) CreateMessages(ctx context.Context, request types.MessagesReque
 		return nil, err
 	}
 
-	var response types.MessagesResponse
+	var response message.MessagesResponse
 	err = json.Unmarshal(output.Body, &response)
 
 	return &response, err

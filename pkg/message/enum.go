@@ -1,4 +1,4 @@
-package types
+package message
 
 // enumer -type=MessagesContentType -linecomment -json=true -text=true
 type MessagesContentType int

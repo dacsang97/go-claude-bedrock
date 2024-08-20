@@ -1,6 +1,4 @@
-package types
-
-const AnthropicVersion = "bedrock-2023-05-31"
+package model
 
 type ClaudeBedrockModel string
 

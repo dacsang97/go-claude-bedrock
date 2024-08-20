@@ -1,4 +1,4 @@
-package types
+package message
 
 type MessagesRequest struct {
 	AnthropicVersion string    `json:"anthropic_version"`
@@ -21,4 +21,11 @@ type MessagesResponse struct {
 type Message struct {
 	Role    string           `json:"role"`
 	Content []MessageContent `json:"content"`
+}
+
+func NewUserTextMessage(text string) Message {
+	return Message{
+		Role:    RoleUser,
+		Content: []MessageContent{NewTextMessageContent(text)},
+	}
 }
